@@ -7,11 +7,15 @@ class ArtistSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class AlbomSerializer(serializers.ModelSerializer):
+    author=ArtistSerializer()
     class Meta:
         model = Albom
         fields = '__all__'
 
 class SongSerializer(serializers.ModelSerializer):
+    artist = ArtistSerializer()
+    albom = AlbomSerializer()
+    
     class Meta:
         model = Song
         fields = '__all__'

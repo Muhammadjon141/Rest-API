@@ -14,6 +14,7 @@ class Artist(models.Model):
     
 class Albom(models.Model):
     title = models.CharField(max_length=50)
+    author = models.ForeignKey(Artist, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='alboms/')
     create_date = models.DateTimeField(auto_now_add=True)
     
