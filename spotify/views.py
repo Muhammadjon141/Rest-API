@@ -6,7 +6,12 @@ from .models import Albom, Artist, Song
 
 class ArstistApiView(APIView):
     def get(self, request):
+        search_data = request.query_params.get('search')
         query_set = Artist.get_info_artist()
+        if search_data is not None:
+            query_set = query_set.filter(first_name__icontains=search_data)
+            serializers = ArtistSerializer(query_set, many=True)
+            return Response(data=serializers.data)
         serializers = ArtistSerializer(query_set, many=True)
         return Response(data=serializers.data)
     
@@ -19,7 +24,12 @@ class ArstistApiView(APIView):
     
 class AlbomApiView(APIView):
     def get(self, request):
+        search_data = request.query_params.get('search')
         query_set = Albom.get_info_albom()
+        if search_data is not None:
+            query_set = query_set.filter(title__icontains=search_data)
+            serializers = AlbomSerializer(query_set, many=True)
+            return Response(data=serializers.data)
         serializers = AlbomSerializer(query_set, many=True)
         return Response(data=serializers.data)
     
@@ -33,7 +43,12 @@ class AlbomApiView(APIView):
     
 class SongApiView(APIView):
     def get(self, request):
+        search_data = request.query_params.get('search')
         query_set = Song.get_info_song()
+        if search_data is not None:
+            query_set = query_set.filter(title__icontains=search_data) | Song.get_full_name(search_data)
+            serializers = SongSerializer(query_set, many=True)
+            return Response(data=serializers.data)
         serializers = SongSerializer(query_set, many=True)
         return Response(data=serializers.data)
     

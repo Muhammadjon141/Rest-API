@@ -31,6 +31,10 @@ class Song(models.Model):
     artist = models.ForeignKey(Artist, on_delete=models.CASCADE)
     albom = models.ForeignKey(Albom, on_delete=models.CASCADE)
     create_date = models.DateTimeField(auto_now_add=True)
+    
+    @staticmethod
+    def get_full_name(search_data):
+        return Song.objects.filter(artist__first_name__icontains=search_data)    
 
     @staticmethod
     def get_info_song():
