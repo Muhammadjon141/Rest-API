@@ -1,11 +1,16 @@
-from django.urls import path
-from .views import ArstistApiView, AlbomApiView, SongApiView, SongDetailApiView, AlbomDetailApiView, ArtistDetailApiView
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import ArstistApiViewSet, AlbomApiViewSet, SongApiViewSet
+from rest_framework.authtoken.views import obtain_auth_token
+
+router = DefaultRouter()
+router.register(r'artist', ArstistApiViewSet, basename='artist')
+router.register(r'albom', AlbomApiViewSet, basename='albom')
+router.register(r'song', SongApiViewSet, basename='song')
+
 
 urlpatterns = [
-    path('artist/', ArstistApiView.as_view(), name='ArstistApiView'),
-    path('artist/<int:id>/', ArtistDetailApiView.as_view(), name='ArstistApiView_detail'),
-    path('albom/', AlbomApiView.as_view(), name='AlbomApiView'),
-    path('albom/<int:id>/', AlbomDetailApiView.as_view(), name='AlbomApiView_detail'),
-    path('song/', SongApiView.as_view(), name='SongApiView'),
-    path('song/<int:id>/', SongDetailApiView.as_view(), name='SongApiView_detail'),
+    # path('', include(router.urls)),
+    path('', include(router.urls)),
+    path('api-auth-token/', obtain_auth_token),
 ]

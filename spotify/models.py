@@ -29,7 +29,7 @@ class Song(models.Model):
     title = models.CharField(max_length=70)
     image = models.ImageField(upload_to='songs/')
     artist = models.ForeignKey(Artist, on_delete=models.CASCADE)
-    albom = models.ForeignKey(Albom, on_delete=models.CASCADE)
+    albom = models.ForeignKey(Albom, related_name='songs', on_delete=models.CASCADE)
     create_date = models.DateTimeField(auto_now_add=True)
     
     @staticmethod
